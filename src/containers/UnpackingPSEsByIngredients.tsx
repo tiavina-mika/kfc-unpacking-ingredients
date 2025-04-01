@@ -21,9 +21,7 @@ const sx = {
   }
 }
 
-const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>) => {
 
-}
 const UnpackingPSEsByIngredients = () => {
   const [ingredientsTodo, setIngredientsTodo] = useState<Record<string, any>[]>(ingredientsTodoData);
   const [ingredientsDone, setIngredientsDone] = useState<Record<string, any>[]>(ingredientsDoneData);
