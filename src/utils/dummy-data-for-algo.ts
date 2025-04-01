@@ -1,11 +1,11 @@
 // example of data structure for the algorithm
-const pses = [
+const initialPSEs = [
 	{
 		objectId: "pse01",
 		unpackingProgress: [
 			{ supplierItem: { objectId: "si01" }, status: "TODO" }
 		],
-    status: "TODO"
+    status: "Locked"
 	},
 	{
 		objectId: "pse02",
@@ -13,7 +13,7 @@ const pses = [
 			{ supplierItem: { objectId: "si01" }, status: "DONE" },
 			{ supplierItem: { objectId: "si02" }, status: "TODO" }
 		],
-    status: "TODO"
+    status: "Locked"
 	},
 	{
 		objectId: "pse03",
@@ -22,9 +22,25 @@ const pses = [
 			{ supplierItem: { objectId: "si02" }, status: "DONE" },
 			{ supplierItem: { objectId: "si03" }, status: "TODO" }
 		],
-    status: "TODO"
+    status: "TODO",
   },
 ]
+
+const pses = initialPSEs.map((pse, index) => {
+  if (index === 1){
+    return {
+      ...pse,
+      ulteriorStep: initialPSEs[0]
+    }
+  }
+  if (index === 2){
+    return {
+      ...pse,
+      ulteriorStep: initialPSEs[1]
+    }
+  }
+  return pse
+})
 
 const ingredients = [
 	{
@@ -101,6 +117,18 @@ console.log("🚀 ~ data:", {
   ingredientsDone
 })
 
+const changeUnpackingUlteriorStepToTodo = (pse: Record<string, any>) => {
+  const { ulteriorStep } = pse
+  if (ulteriorStep) {
+    ulteriorStep.status = "TODO"
+  }
+  if (ulteriorStep?.ulteriorStep) {
+    changeUnpackingUlteriorStepToTodo(ulteriorStep)
+  }
+
+  return ulteriorStep
+}
+
 const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, currentStatus = "TODO") => {
   const { objectId, productionStepExecutions } = ingredient;
   const newProductionStepExecutions = []
@@ -116,10 +144,15 @@ const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, curre
       return unpacking;
     })
     productionStepExecution.unpackingProgress = newUnpackingProgress
-    // if all newUnpackingProgress status are "DONE", set the status to "DONE"
     const allDone = newUnpackingProgress.every((unpacking: Record<string, any>) => unpacking.status === "DONE")
     if (allDone) {
       productionStepExecution.status = "DONE"
+      const ulteriorStep = changeUnpackingUlteriorStepToTodo(productionStepExecution)
+      console.log("🚀 ~ changeUnpackingIngredientsStatus ~ ulteriorStep:", ulteriorStep)
+      
+      if (productionStepExecution.ulteriorStep) {
+        productionStepExecution.ulteriorStep = ulteriorStep
+      }
     }
 
     newProductionStepExecutions.push(productionStepExecution)
@@ -129,7 +162,7 @@ const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, curre
 }
 
 export const testSaveUnpackingIngredientsStatus = () => {
-  const ingredient = ingredientsToDo[2]
+  const ingredient = ingredientsToDo[1]
   const currentStatus = "TODO"
   const newProductionStepExecutions = changeUnpackingIngredientsStatus(ingredient, currentStatus)
   console.log("🚀 ~ testSaveUnpackingIngredientsStatus:", newProductionStepExecutions)
