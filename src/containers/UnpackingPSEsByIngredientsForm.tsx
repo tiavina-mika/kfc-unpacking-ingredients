@@ -10,8 +10,8 @@ const sx = {
     backgroundColor: "#E3F2FD"
   },
   cardTitle: {
-    fontWeight: 400,
-    color: "#555",
+    fontWeight: 500,
+    color: "#000",
     fontSize: "16px",
     lineHeight: 1.5
   },
@@ -44,9 +44,9 @@ const UnpackingPSEsByIngredientsForm = ({ tab, index, ingredients = [] }: Props)
       {ingredients.map((ingredient, index) => (
         <Stack key={index + ingredient.objectId} spacing={2} sx={sx.card}>
           {/* title */}
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={1} alignItems="center">
             <Checkbox />
-            <Typography variant="h4" fontWeight={600}>
+            <Typography variant="h4" sx={sx.cardTitle}>
               {ingredient.name} - {getPSEsGrossWeightSum(ingredient.productionStepExecutions)} kg
             </Typography>
           </Stack>
