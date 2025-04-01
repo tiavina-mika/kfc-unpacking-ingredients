@@ -16,41 +16,39 @@ const sx = {
     alignSelf: "stretch",
   },
   tab: {
-    flex: 1,
     textAlign: "center",
-    minWidth: "100%"
+    minWidth: "50%"
   }
 }
 const UnpackingPSEsByIngredients = () => {
   const [tab, setTab] = useState<number>(0);
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+    console.log("🚀 ~ handleChange ~ newValue:", newValue)
     setTab(newValue);
   }
 
   return (
     <Box sx={{ width: '100%', display: "flex", flexDirection: "column", gap: 2 }}>
       <Box sx={sx.tabsContainer}>
-        {[`Produits à DÉConditionner (${ingredientsTodo.length})`, `PRODUITS DÉConditionnés (${ingredientsDone.length})`].map((title, index) => (
-          <Tabs
-            key={index}
-            value={index}
-            textColor="inherit"
-            indicatorColor="primary"
-            onChange={handleChange}
-            sx={sx.tabs}
-            aria-label="Unpacking Ingredients Tabs"
-          >
+        <Tabs
+          value={tab}
+          textColor="inherit"
+          indicatorColor="primary"
+          onChange={handleChange}
+          sx={sx.tabs}
+          aria-label="Unpacking Ingredients Tabs"
+        >
+          {[`Produits à DÉConditionner (${ingredientsTodo.length})`, `PRODUITS DÉConditionnés (${ingredientsDone.length})`].map((title, index) => (
             <Tab
+              key={index}
               label={title}
-              id={`unpacking-ingredients-${index}`}
-              aria-controls={`unpacking-ingredientspanel-${index}`}
               sx={sx.tab}
             />
-          </Tabs>
-        ))}
+          ))}
+        </Tabs>
       </Box>
-      <UnpackingPSEsByIngredientsForm ingredients={ingredientsTodo} tab={tab} index={0} />
-      <UnpackingPSEsByIngredientsForm ingredients={ingredientsDone} tab={tab} index={1} />
+      {tab === 0 && <UnpackingPSEsByIngredientsForm ingredients={ingredientsTodo} />}
+      {tab === 1 && <UnpackingPSEsByIngredientsForm ingredients={ingredientsDone} />}
     </Box>
   )
 }
