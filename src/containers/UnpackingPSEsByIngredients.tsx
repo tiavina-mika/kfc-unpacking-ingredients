@@ -1,7 +1,8 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Button, Tab, Tabs } from "@mui/material";
 import { ingredientsDoneData, ingredientsTodoData } from "../utils/data";
 import { useState } from "react";
 import UnpackingPSEsByIngredientsForm from "./UnpackingPSEsByIngredientsForm";
+import { testSaveUnpackingIngredientsStatus } from "../utils/dummy-data-for-algo";
 
 const sx = {
   tabsContainer: {
@@ -76,6 +77,14 @@ const UnpackingPSEsByIngredients = () => {
           status="DONE"
         />
       )}
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => testSaveUnpackingIngredientsStatus()}
+      >
+        Test save
+      </Button>
     </Box>
   )
 }
