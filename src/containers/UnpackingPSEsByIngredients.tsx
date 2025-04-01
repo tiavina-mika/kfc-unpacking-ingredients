@@ -21,9 +21,28 @@ const sx = {
   }
 }
 const UnpackingPSEsByIngredients = () => {
+  const [selectedIngredientsTodo, setSelectedIngredientsTodo] = useState<Record<string, any>[]>([]);
+  const [selectedIngredientsDone, setSelectedIngredientsDone] = useState<Record<string, any>[]>([]);
   const [tab, setTab] = useState<number>(0);
+
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
+  }
+
+  const handleSelectIngredients = (status: "TODO" | "DONE") => (ingredient: Record<string, any>) => {
+    if (status === "TODO") {
+      if (selectedIngredientsTodo.some((i) => i.objectId === ingredient.objectId)) {
+        setSelectedIngredientsTodo(selectedIngredientsTodo.filter((i) => i.objectId !== ingredient.objectId));
+      } else {
+        setSelectedIngredientsTodo([...selectedIngredientsTodo, ingredient]);
+      }
+    } else if (status === "DONE") {
+      if (selectedIngredientsDone.some((i) => i.objectId === ingredient.objectId)) {
+        setSelectedIngredientsDone(selectedIngredientsDone.filter((i) => i.objectId !== ingredient.objectId));
+      } else {
+        setSelectedIngredientsDone([...selectedIngredientsDone, ingredient]);
+      }
+    }
   }
 
   return (
@@ -46,8 +65,20 @@ const UnpackingPSEsByIngredients = () => {
           ))}
         </Tabs>
       </Box>
-      {tab === 0 && <UnpackingPSEsByIngredientsForm ingredients={ingredientsTodo} />}
-      {tab === 1 && <UnpackingPSEsByIngredientsForm ingredients={ingredientsDone} />}
+      {tab === 0 && (
+        <UnpackingPSEsByIngredientsForm
+          ingredients={ingredientsTodo}
+          onSelect={handleSelectIngredients("TODO")}
+          selectedIngredients={selectedIngredientsTodo}
+        />
+      )}
+      {tab === 1 && (
+        <UnpackingPSEsByIngredientsForm
+          ingredients={ingredientsDone}
+          onSelect={handleSelectIngredients("DONE")}
+          selectedIngredients={selectedIngredientsDone}
+        />
+      )}
     </Box>
   )
 }
