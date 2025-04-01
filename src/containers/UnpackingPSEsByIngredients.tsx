@@ -7,15 +7,18 @@ const sx = {
   tabsContainer: {
     borderBottom: 1,
     borderColor: 'divider',
-    display: "flex"
+    display: "flex",
+    alignSelf: "stretch",
   },
   tabs: {
     flex: 1,
     display: "flex",
+    alignSelf: "stretch",
   },
   tab: {
     flex: 1,
     textAlign: "center",
+    minWidth: "100%"
   }
 }
 const UnpackingPSEsByIngredients = () => {
