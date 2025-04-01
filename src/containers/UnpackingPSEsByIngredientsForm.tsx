@@ -61,7 +61,7 @@ const UnpackingPSEsByIngredientsForm = ({ onSelect, status = "TODO", ingredients
             {ingredient.productionStepExecutions.map((pse: any, subIndex: number) => (
               <Stack key={subIndex + index + pse.objectId} direction="row" spacing={2} justifyContent="space-between" alignItems="center">
                 <Typography variant="body2" sx={sx.pseLabel}>
-                  {pse.grossWeight} kg ({pse.description})
+                  {pse.productionStepSnapshot.grossWeight} kg ({pse.productionStep.description})
                 </Typography>
                 <Typography variant="body2" sx={sx.pseLabel}>
                   {pse.uniqueCode}
