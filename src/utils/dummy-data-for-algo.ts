@@ -4,14 +4,16 @@ const pses = [
 		objectId: "pse01",
 		unpackingProgress: [
 			{ supplierItem: { objectId: "si01" }, status: "TODO" }
-		]
+		],
+    status: "TODO"
 	},
 	{
 		objectId: "pse02",
 		unpackingProgress: [
 			{ supplierItem: { objectId: "si01" }, status: "DONE" },
 			{ supplierItem: { objectId: "si02" }, status: "TODO" }
-		]
+		],
+    status: "TODO"
 	},
 	{
 		objectId: "pse03",
@@ -19,8 +21,9 @@ const pses = [
 			{ supplierItem: { objectId: "si01" }, status: "TODO" },
 			{ supplierItem: { objectId: "si02" }, status: "DONE" },
 			{ supplierItem: { objectId: "si03" }, status: "TODO" }
-		]
-	}
+		],
+    status: "TODO"
+  },
 ]
 
 const ingredients = [
@@ -113,6 +116,12 @@ const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, curre
       return unpacking;
     })
     productionStepExecution.unpackingProgress = newUnpackingProgress
+    // if all newUnpackingProgress status are "DONE", set the status to "DONE"
+    const allDone = newUnpackingProgress.every((unpacking: Record<string, any>) => unpacking.status === "DONE")
+    if (allDone) {
+      productionStepExecution.status = "DONE"
+    }
+
     newProductionStepExecutions.push(productionStepExecution)
   }
 
