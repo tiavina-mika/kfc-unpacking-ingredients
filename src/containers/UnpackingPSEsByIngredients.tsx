@@ -23,7 +23,6 @@ const sx = {
 const UnpackingPSEsByIngredients = () => {
   const [tab, setTab] = useState<number>(0);
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-    console.log("🚀 ~ handleChange ~ newValue:", newValue)
     setTab(newValue);
   }
 
