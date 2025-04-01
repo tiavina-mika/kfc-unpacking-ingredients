@@ -29,10 +29,10 @@ const sx = {
 }
 type Props = {
   ingredients: Record<string, any>[];
-  onSelect?: (ingredient: Record<string, any>) => void;
-  selectedIngredients?: Record<string, any>[];
+  onSelect?: (ingredient: Record<string, any>, status: "TODO" | "DONE") => void;
+  status?: "TODO" | "DONE";
 }
-const UnpackingPSEsByIngredientsForm = ({ onSelect, selectedIngredients = [], ingredients = [] }: Props) => {
+const UnpackingPSEsByIngredientsForm = ({ onSelect, status = "TODO", ingredients = [] }: Props) => {
   return (
     <Stack
       spacing={3}
@@ -42,8 +42,8 @@ const UnpackingPSEsByIngredientsForm = ({ onSelect, selectedIngredients = [], in
           {/* title */}
           <Stack direction="row" spacing={1} alignItems="center">
             <Checkbox
-              checked={selectedIngredients.some((i) => i.objectId === ingredient.objectId)}
-              onChange={() => onSelect?.(ingredient)}
+              checked={status === "DONE"}
+              onChange={() => onSelect?.(ingredient, status)}
               sx={{
                 color: "#1976D2",
                 "&.Mui-checked": {
