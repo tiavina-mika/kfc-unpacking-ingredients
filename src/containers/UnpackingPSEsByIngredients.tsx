@@ -45,7 +45,7 @@ const UnpackingPSEsByIngredients = () => {
       <Box sx={sx.tabsContainer}>
         <Tabs
           value={tab}
-          textColor="inherit"
+          textColor="primary"
           indicatorColor="primary"
           onChange={handleChange}
           sx={sx.tabs}
