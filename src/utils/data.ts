@@ -10,7 +10,14 @@ export const ingredientsTodoData = [
                 "theoreticalGrossWeight": 2,
                 "theoreticalNetWeight": 2,
                 "grossWeight": 2,
-                "description": "mettre la coriandre dans le bac 2",
+                productionStep: {
+                    objectId: "lJNaT3R5RW",
+                    name: "Coriandre",
+                    description: "mettre la coriandre dans le bac 2",
+                },
+                productionStepSnapshot: {
+                    "grossWeight": 2,
+                }
             }
         ]
     }
@@ -19,7 +26,7 @@ export const ingredientsTodoData = [
 export const ingredientsDoneData = [
     {
         "name": "X-Brocolis",
-        "objectId": "YARn2QGemM",
+        "objectId": "M2g1vW188",
         "productionStepExecutions": [
             {
                 "objectId": "DXfMpHaSFN",
@@ -27,8 +34,14 @@ export const ingredientsDoneData = [
                 "uniqueCode": "L76",
                 "theoreticalGrossWeight": 0.51,
                 "theoreticalNetWeight": 0.5,
-                "grossWeight": 2,
-                "description": "mettre les brocolis dans le bac 1",
+                productionStep: {
+                    objectId: "DXfMpHaSFN",
+                    name: "Brocolis",
+                    "description": "mettre les brocolis dans le bac 1",
+                },
+                productionStepSnapshot: {
+                    "grossWeight": 2,
+                }
             },
             {
                 "objectId": "raMkJs1uCj",
@@ -36,7 +49,14 @@ export const ingredientsDoneData = [
                 "uniqueCode": "B87",
                 "theoreticalGrossWeight": 1,
                 "theoreticalNetWeight": 1,
-                "grossWeight": 2,
+                productionStep: {
+                    objectId: "raMkJs1uCj",
+                    name: "Brocolis",
+                    "description": "mettre les brocolis dans le bac 1",
+                },
+                productionStepSnapshot: {
+                    "grossWeight": 2,
+                }
             }
         ]
     }
