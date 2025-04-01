@@ -3,22 +3,22 @@ const pses = [
 	{
 		objectId: "pse01",
 		unpackingProgress: [
-			{ supplierItem: "si01", status: "TODO" }
+			{ supplierItem: { objectId: "si01" }, status: "TODO" }
 		]
 	},
 	{
 		objectId: "pse02",
 		unpackingProgress: [
-			{ supplierItem: "si01", status: "DONE" },
-			{ supplierItem: "si02", status: "TODO" }
+			{ supplierItem: { objectId: "si01" }, status: "DONE" },
+			{ supplierItem: { objectId: "si02" }, status: "TODO" }
 		]
 	},
 	{
 		objectId: "pse03",
 		unpackingProgress: [
-			{ supplierItem: "si01", status: "TODO" },
-			{ supplierItem: "si02", status: "DONE" },
-			{ supplierItem: "si03", status: "TODO" }
+			{ supplierItem: { objectId: "si01" }, status: "TODO" },
+			{ supplierItem: { objectId: "si02" }, status: "DONE" },
+			{ supplierItem: { objectId: "si03" }, status: "TODO" }
 		]
 	}
 ]
@@ -51,20 +51,24 @@ const ingredientsToDo = [
 	{
 		objectId: "si01",
 		productionStepExecutions: [
-			{ objectId: "pse01", status: "TODO" },
-			{ objectId: "pse03", status: "TODO" }
+			// { objectId: "pse01", status: "TODO" },
+      { ...pses[0], status: "TODO" },
+			// { objectId: "pse03", status: "TODO" }
+      { ...pses[2], status: "TODO" }
 		]
 	},
 	{
 		objectId: "si02",
 		productionStepExecutions: [
-			{ objectId: "pse02", status: "TODO" },
+			// { objectId: "pse02", status: "TODO" },
+      { ...pses[1], status: "TODO" },
 		]
 	},
 	{
 		objectId: "si03",
 		productionStepExecutions: [
-			{ objectId: "pse03", status: "TODO" }
+			// { objectId: "pse03", status: "TODO" }
+      { ...pses[2], status: "TODO" }
 		]
 	}
 ]
@@ -73,13 +77,15 @@ const ingredientsDone = [
 	{
 		objectId: "si01",
 		productionStepExecutions: [
-			{ objectId: "pse02", status: "DONE" }
+			// { objectId: "pse02", status: "DONE" }
+      { ...pses[1], status: "DONE" },
 		]
 	},
 	{
 		objectId: "si02",
 		productionStepExecutions: [
-			{ objectId: "pse03", status: "DONE" }
+			// { objectId: "pse03", status: "DONE" }
+      { ...pses[2], status: "DONE" }
 		]
 	}
 ]
@@ -92,7 +98,7 @@ console.log("🚀 ~ data:", {
   ingredientsDone
 })
 
-export const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, currentStatus = "TODO") => {
+const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, currentStatus = "TODO") => {
   const { objectId, productionStepExecutions } = ingredient;
   const newProductionStepExecutions = []
   for (const productionStepExecution of productionStepExecutions) {
@@ -109,6 +115,13 @@ export const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>
     productionStepExecution.unpackingProgress = newUnpackingProgress
     newProductionStepExecutions.push(productionStepExecution)
   }
-  
+
   return newProductionStepExecutions
+}
+
+export const testSaveUnpackingIngredientsStatus = () => {
+  const ingredient = ingredientsToDo[0]
+  const currentStatus = "TODO"
+  const newProductionStepExecutions = changeUnpackingIngredientsStatus(ingredient, currentStatus)
+  console.log("🚀 ~ testSaveUnpackingIngredientsStatus:", newProductionStepExecutions)
 }
