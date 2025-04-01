@@ -1,7 +1,7 @@
 import { Checkbox, Stack, Typography } from "@mui/material";
 
 const getPSEsGrossWeightSum = (productionStepExecutions = []) => {
-  return productionStepExecutions.reduce((acc: number, pse: Record<string, any>) => acc + pse.grossWeight, 0);
+  return productionStepExecutions.reduce((acc: number, pse: Record<string, any>) => acc + (pse.productionStepSnapshot.grossWeight || 0), 0);
 }
 const sx = {
   card: {
