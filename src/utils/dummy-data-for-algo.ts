@@ -91,3 +91,24 @@ console.log("🚀 ~ data:", {
   ingredientsToDo,
   ingredientsDone
 })
+
+export const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, currentStatus = "TODO") => {
+  const { objectId, productionStepExecutions } = ingredient;
+  const newProductionStepExecutions = []
+  for (const productionStepExecution of productionStepExecutions) {
+    const unpackingProgress = productionStepExecution.unpackingProgress || []
+    const newUnpackingProgress = unpackingProgress.map((unpacking:  Record<string, any>) => {
+      if (unpacking.supplierItem.objectId === objectId) {
+        return {
+          ...unpacking,
+          status: currentStatus === "TODO" ? "DONE" : "TODO"
+        };
+      }
+      return unpacking;
+    })
+    productionStepExecution.unpackingProgress = newUnpackingProgress
+    newProductionStepExecutions.push(productionStepExecution)
+  }
+  
+  return newProductionStepExecutions
+}
