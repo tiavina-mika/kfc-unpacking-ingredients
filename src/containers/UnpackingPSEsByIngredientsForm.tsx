@@ -29,8 +29,10 @@ const sx = {
 }
 type Props = {
   ingredients: Record<string, any>[];
+  onSelect?: (ingredient: Record<string, any>) => void;
+  selectedIngredients?: Record<string, any>[];
 }
-const UnpackingPSEsByIngredientsForm = ({ ingredients = [] }: Props) => {
+const UnpackingPSEsByIngredientsForm = ({ onSelect, selectedIngredients = [], ingredients = [] }: Props) => {
   return (
     <Stack
       spacing={3}
@@ -39,7 +41,16 @@ const UnpackingPSEsByIngredientsForm = ({ ingredients = [] }: Props) => {
         <Stack key={index + ingredient.objectId} spacing={2} sx={sx.card}>
           {/* title */}
           <Stack direction="row" spacing={1} alignItems="center">
-            <Checkbox />
+            <Checkbox
+              checked={selectedIngredients.some((i) => i.objectId === ingredient.objectId)}
+              onChange={() => onSelect?.(ingredient)}
+              sx={{
+                color: "#1976D2",
+                "&.Mui-checked": {
+                  color: "#1976D2",
+                },
+              }}
+            />
             <Typography variant="h4" sx={sx.cardTitle}>
               {ingredient.name} - {getPSEsGrossWeightSum(ingredient.productionStepExecutions)} kg
             </Typography>
