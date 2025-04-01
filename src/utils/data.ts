@@ -1,4 +1,4 @@
-export const ingredientsTodo = [
+export const ingredientsTodoData = [
     {
         "name": "X-Coriandre",
         "objectId": "59uhvzW188",
@@ -16,7 +16,7 @@ export const ingredientsTodo = [
     }
   ]
 
-export const ingredientsDone = [
+export const ingredientsDoneData = [
     {
         "name": "X-Brocolis",
         "objectId": "YARn2QGemM",
