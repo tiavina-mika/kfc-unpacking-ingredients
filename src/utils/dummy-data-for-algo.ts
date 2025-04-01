@@ -129,7 +129,7 @@ const changeUnpackingIngredientsStatus = (ingredient: Record<string, any>, curre
 }
 
 export const testSaveUnpackingIngredientsStatus = () => {
-  const ingredient = ingredientsToDo[0]
+  const ingredient = ingredientsToDo[2]
   const currentStatus = "TODO"
   const newProductionStepExecutions = changeUnpackingIngredientsStatus(ingredient, currentStatus)
   console.log("🚀 ~ testSaveUnpackingIngredientsStatus:", newProductionStepExecutions)
