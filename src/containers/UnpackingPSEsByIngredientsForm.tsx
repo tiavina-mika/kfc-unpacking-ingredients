@@ -9,8 +9,22 @@ const sx = {
     borderRadius: "8px",
     backgroundColor: "#E3F2FD"
   },
+  cardTitle: {
+    fontWeight: 400,
+    color: "#555",
+    fontSize: "16px",
+    lineHeight: 1.5
+  },
   cardBody: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    padding: "8px 16px",
+    borderRadius: "8px",
+  },
+  pseLabel: {
+    fontWeight: 400,
+    color: "#555",
+    fontSize: "16px",
+    lineHeight: 1.5
   }
 }
 type Props = {
@@ -41,10 +55,10 @@ const UnpackingPSEsByIngredientsForm = ({ tab, index, ingredients = [] }: Props)
           <Stack spacing={2} sx={sx.cardBody}>
             {ingredient.productionStepExecutions.map((pse: any, subIndex: number) => (
               <Stack key={subIndex + index + pse.objectId} direction="row" spacing={2} justifyContent="space-between" alignItems="center">
-                <Typography variant="body2" fontWeight={600}>
+                <Typography variant="body2" sx={sx.pseLabel}>
                   {pse.grossWeight} kg ({pse.description})
                 </Typography>
-                <Typography variant="body2" fontWeight={600}>
+                <Typography variant="body2" sx={sx.pseLabel}>
                   {pse.uniqueCode}
                 </Typography>
               </Stack>
