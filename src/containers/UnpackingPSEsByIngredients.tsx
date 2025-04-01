@@ -25,7 +25,7 @@ const UnpackingPSEsByIngredients = () => {
   }
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', display: "flex", flexDirection: "column", gap: 2 }}>
       <Box sx={sx.tabsContainer}>
         {[`Produits à DÉConditionner (${ingredientsTodo.length})`, `PRODUITS DÉConditionnés (${ingredientsDone.length})`].map((title, index) => (
           <Tabs
