@@ -29,17 +29,11 @@ const sx = {
 }
 type Props = {
   ingredients: Record<string, any>[];
-  tab: number;
-  index: number;
 }
-const UnpackingPSEsByIngredientsForm = ({ tab, index, ingredients = [] }: Props) => {
+const UnpackingPSEsByIngredientsForm = ({ ingredients = [] }: Props) => {
   return (
     <Stack
       spacing={3}
-      role="tabpanel"
-      id={`unpacking-ingredientspanel-${tab}`}
-      aria-labelledby={`unpacking-ingredients-${tab}`}
-      hidden={tab !== index}
     >
       {ingredients.map((ingredient, index) => (
         <Stack key={index + ingredient.objectId} spacing={2} sx={sx.card}>
