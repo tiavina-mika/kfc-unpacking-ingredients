@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import { ingredientsDone, ingredientsTodo } from "../utils/data";
+import { ingredientsDoneData, ingredientsTodoData } from "../utils/data";
 import { useState } from "react";
 import UnpackingPSEsByIngredientsForm from "./UnpackingPSEsByIngredientsForm";
 
@@ -21,27 +21,22 @@ const sx = {
   }
 }
 const UnpackingPSEsByIngredients = () => {
-  const [selectedIngredientsTodo, setSelectedIngredientsTodo] = useState<Record<string, any>[]>([]);
-  const [selectedIngredientsDone, setSelectedIngredientsDone] = useState<Record<string, any>[]>([]);
+  const [ingredientsTodo, setIngredientsTodo] = useState<Record<string, any>[]>(ingredientsTodoData);
+  const [ingredientsDone, setIngredientsDone] = useState<Record<string, any>[]>(ingredientsDoneData);
+
   const [tab, setTab] = useState<number>(0);
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   }
 
-  const handleSelectIngredients = (status: "TODO" | "DONE") => (ingredient: Record<string, any>) => {
+  const handleSelectIngredients = (ingredient: Record<string, any>, status: "TODO" | "DONE") => {
     if (status === "TODO") {
-      if (selectedIngredientsTodo.some((i) => i.objectId === ingredient.objectId)) {
-        setSelectedIngredientsTodo(selectedIngredientsTodo.filter((i) => i.objectId !== ingredient.objectId));
-      } else {
-        setSelectedIngredientsTodo([...selectedIngredientsTodo, ingredient]);
-      }
+      setIngredientsTodo(ingredientsTodo.filter((i) => i.objectId !== ingredient.objectId));
+      setIngredientsDone([ingredient, ...ingredientsDone]);
     } else if (status === "DONE") {
-      if (selectedIngredientsDone.some((i) => i.objectId === ingredient.objectId)) {
-        setSelectedIngredientsDone(selectedIngredientsDone.filter((i) => i.objectId !== ingredient.objectId));
-      } else {
-        setSelectedIngredientsDone([...selectedIngredientsDone, ingredient]);
-      }
+      setIngredientsDone(ingredientsDone.filter((i) => i.objectId !== ingredient.objectId));
+      setIngredientsTodo([ingredient, ...ingredientsTodo]);
     }
   }
 
@@ -68,15 +63,15 @@ const UnpackingPSEsByIngredients = () => {
       {tab === 0 && (
         <UnpackingPSEsByIngredientsForm
           ingredients={ingredientsTodo}
-          onSelect={handleSelectIngredients("TODO")}
-          selectedIngredients={selectedIngredientsTodo}
+          onSelect={handleSelectIngredients}
+          status="TODO"
         />
       )}
       {tab === 1 && (
         <UnpackingPSEsByIngredientsForm
           ingredients={ingredientsDone}
-          onSelect={handleSelectIngredients("DONE")}
-          selectedIngredients={selectedIngredientsDone}
+          onSelect={handleSelectIngredients}
+          status="DONE"
         />
       )}
     </Box>
