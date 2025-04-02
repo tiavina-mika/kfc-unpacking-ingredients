@@ -1,7 +1,7 @@
 import { Checkbox, Stack, Typography } from "@mui/material";
 
 const getPSEsGrossWeightSum = (productionStepExecutions = []) => {
-  return productionStepExecutions.reduce((acc: number, pse: Record<string, any>) => acc + pse.grossWeight, 0);
+  return productionStepExecutions.reduce((acc: number, pse: Record<string, any>) => acc + (pse.productionStepSnapshot.grossWeight || 0), 0);
 }
 const sx = {
   card: {
@@ -29,10 +29,10 @@ const sx = {
 }
 type Props = {
   ingredients: Record<string, any>[];
-  onSelect?: (ingredient: Record<string, any>) => void;
-  selectedIngredients?: Record<string, any>[];
+  onSelect?: (ingredient: Record<string, any>, status: "TODO" | "DONE") => void;
+  status?: "TODO" | "DONE";
 }
-const UnpackingPSEsByIngredientsForm = ({ onSelect, selectedIngredients = [], ingredients = [] }: Props) => {
+const UnpackingPSEsByIngredientsForm = ({ onSelect, status = "TODO", ingredients = [] }: Props) => {
   return (
     <Stack
       spacing={3}
@@ -42,8 +42,8 @@ const UnpackingPSEsByIngredientsForm = ({ onSelect, selectedIngredients = [], in
           {/* title */}
           <Stack direction="row" spacing={1} alignItems="center">
             <Checkbox
-              checked={selectedIngredients.some((i) => i.objectId === ingredient.objectId)}
-              onChange={() => onSelect?.(ingredient)}
+              checked={status === "DONE"}
+              onChange={() => onSelect?.(ingredient, status)}
               sx={{
                 color: "#1976D2",
                 "&.Mui-checked": {
@@ -61,7 +61,7 @@ const UnpackingPSEsByIngredientsForm = ({ onSelect, selectedIngredients = [], in
             {ingredient.productionStepExecutions.map((pse: any, subIndex: number) => (
               <Stack key={subIndex + index + pse.objectId} direction="row" spacing={2} justifyContent="space-between" alignItems="center">
                 <Typography variant="body2" sx={sx.pseLabel}>
-                  {pse.grossWeight} kg ({pse.description})
+                  {pse.productionStepSnapshot.grossWeight} kg ({pse.productionStep.description})
                 </Typography>
                 <Typography variant="body2" sx={sx.pseLabel}>
                   {pse.uniqueCode}
