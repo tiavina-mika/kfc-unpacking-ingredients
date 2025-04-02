@@ -29,7 +29,7 @@ const UnpackingPSEsByIngredients = () => {
 
   const [tab, setTab] = useState<number>(0);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   }
 
@@ -50,7 +50,7 @@ const UnpackingPSEsByIngredients = () => {
           value={tab}
           textColor="primary"
           indicatorColor="primary"
-          onChange={handleChange}
+          onChange={handleChangeTab}
           sx={sx.tabs}
           aria-label="Unpacking Ingredients Tabs"
         >
